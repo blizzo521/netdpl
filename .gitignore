@@ -13,8 +13,15 @@
 !/log/.keep
 !/tmp/.keep
 /.idea/*
+yarn.lock
 
 /node_modules
 /yarn-error.log
 
 .byebug_history
+# React on Rails
+npm-debug.log*
+node_modules
+
+# Generated js bundles
+/public/webpack/*
