@@ -23,5 +23,13 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation %>
   </div>
+  <div class="field">
+    <%= f.label :dpl_username %><br />
+    <%= f.text_field :dpl_username %>
+  </div>
+  <div class="field">
+    <%= f.label :dpl_password %><br />
+    <%= f.password_field :dpl_password %>
+  </div>
   <div class="actions"><%= f.submit "Sign Up" %></div>
 <% end %>

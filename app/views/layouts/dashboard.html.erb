@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ReactOnRailsWithWebpacker</title>
+  <%= csrf_meta_tags %>
+  <%= javascript_pack_tag 'webpack-bundle' %>
+</head>
+
+<body>
+  <div id="user_header">
+    <%= link_to 'Logout', logout_path %>
+  </div>
+
+  <%= yield %>
+</body>
+</html>
