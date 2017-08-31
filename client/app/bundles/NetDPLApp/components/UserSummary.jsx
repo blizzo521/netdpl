@@ -14,7 +14,7 @@ export default class UserSummary extends React.Component {
     return (
       <div>
         <h3>
-          Hello, {this.props.email}!
+          Hello, {this.props.name}! ({this.props.email})
         </h3>
       </div>
     );

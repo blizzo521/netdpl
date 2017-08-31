@@ -11,6 +11,7 @@ export default class NetDPLApp extends React.Component {
   static propTypes = {
     user: PropTypes.shape({
       email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
     }).isRequired,
     holds: PropTypes.arrayOf(BookPropTypes).isRequired,
     books: PropTypes.arrayOf(BookPropTypes).isRequired,
@@ -21,6 +22,7 @@ export default class NetDPLApp extends React.Component {
     super(props);
     this.state = {
       email: this.props.user.email,
+      name: this.props.user.name,
       holds: this.props.holds,
       books: this.props.books,
       loans: this.props.loans,
@@ -30,7 +32,7 @@ export default class NetDPLApp extends React.Component {
   render() {
     return (
       <div>
-        <UserSummary email={this.state.email} />
+        <UserSummary email={this.state.email} name={this.state.name} />
         <Loans loans={this.state.loans}/>
         <Holds holds={this.state.holds}/>
         <Books books={this.state.books}/>
