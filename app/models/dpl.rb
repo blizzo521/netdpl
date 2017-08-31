@@ -11,18 +11,18 @@ class DPL
     }
   end
 
-  def search(phrase)
+  def search(keywords)
     authenticate
     results = []
 
-    @agent.get('https://catalog.denverlibrary.org/search/default.aspx?type=Keyword') do |search_page|
+    @agent.get("https://catalog.denverlibrary.org/search/components/ajaxResults.aspx?page=1&type=Keyword&term=#{params[:keyword]}&by=KW&sort=RELEVANCE&limit=TOM=*&query=&page=0&searchid=5") do |search_page|
       form = search_page.form_with(:action => 'https://catalog.denverlibrary.org/search/default.aspx')
-
+https://catalog.denverlibrary.org/search/components/ajaxResults.aspx?page=1&type=Keyword&term=gwenpool&by=KW&sort=RELEVANCE
 
       binding.remote_pry
 
 
-      form['ctrlSearchBars:searchbarKeyword:textboxTerm'] = phrase
+      form['ctrlSearchBars:searchbarKeyword:textboxTerm'] = keywords
 
       results_page = form.submit(form.buttons.first)
 

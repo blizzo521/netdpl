@@ -11,6 +11,9 @@ class SearchController < ApplicationController
       results << result
     end
 
+    dpl = DPL.new(@current_user)
+    dpl.search(params[:keywords])
+
     render json: results
   end
 
