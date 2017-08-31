@@ -5,7 +5,14 @@ import { BookPropTypes } from './constants';
 
 export default class Loans extends React.Component {
   static propTypes = {
-    loans: PropTypes.arrayOf(BookPropTypes).isRequired,
+    loans: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        due: PropTypes.string.isRequired,
+        renewals: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   };
 
   constructor(props) {
@@ -13,12 +20,33 @@ export default class Loans extends React.Component {
   }
 
   render() {
+console.log(this.props)
+
     return (
       <div>
         <h4>Loans</h4>
-        {this.props.loans.map((item, i) => {
-          return (<div key={item.id}>ID: {item.id}</div>);
-        })}
+        <table>
+          <thead>
+            <tr>
+              <td>type</td>
+              <td>title</td>
+              <td>due</td>
+              <td>renewals</td>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.loans.map((item, i) => {
+              return (
+                <tr key={i}>
+                  <td>{item.type}</td>
+                  <td>{item.title}</td>
+                  <td>{item.due}</td>
+                  <td>{item.renewals}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     );
   }

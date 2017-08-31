@@ -2,7 +2,6 @@
   "scripts": {
     "postinstall": "cd client && yarn install"
   },
-
   "name": "netdpl",
   "private": true,
   "dependencies": {}

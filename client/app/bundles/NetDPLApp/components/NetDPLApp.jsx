@@ -13,9 +13,16 @@ export default class NetDPLApp extends React.Component {
       email: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired,
-    holds: PropTypes.arrayOf(BookPropTypes).isRequired,
+    loans: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        due: PropTypes.string.isRequired,
+        renewals: PropTypes.string.isRequired
+      })
+    ).isRequired,
     books: PropTypes.arrayOf(BookPropTypes).isRequired,
-    loans: PropTypes.arrayOf(BookPropTypes).isRequired,
+    holds: PropTypes.arrayOf(BookPropTypes).isRequired,
   };
 
   constructor(props) {
