@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'sessions/new'
   get 'dashboard/index'
+  get 'search', to: 'search#index'
 
   resources :users
   resources :sessions

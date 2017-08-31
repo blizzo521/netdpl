@@ -2,16 +2,21 @@ require 'rubygems'
 require 'mechanize'
 require 'pry-remote'
 
+DO_IT_LIVE = false
+
 class DashboardController < ApplicationController
   layout 'dashboard'
   before_action :ensure_logged_in
 
   def index
-    my_page = nil
-    signin_page = nil
-    loans_page = nil
-    loans = []
+    if DO_IT_LIVE
+      index_real
+    else
+      index_fake
+    end
+  end
 
+  def index_real
     dpl = DPL.new(@current_user)
 
     @netdplapp_props = {
@@ -24,6 +29,19 @@ class DashboardController < ApplicationController
       holds: dpl.holds,
     }
   end
+
+  def index_fake
+    @netdplapp_props = {
+      user: {
+        email: @current_user.email,
+        name: 'Some Name',
+      },
+      books: [],
+      loans: [],
+      holds: [],
+    }
+  end
+
 
   private
 

@@ -5,7 +5,9 @@ import UserSummary from './UserSummary';
 import Holds from './Holds';
 import Books from './Books';
 import Loans from './Loans';
+import Search from './Search';
 import { BookPropTypes } from './constants';
+import * as Data from "./data";
 
 export default class NetDPLApp extends React.Component {
   static propTypes = {
@@ -33,7 +35,14 @@ export default class NetDPLApp extends React.Component {
       holds: this.props.holds,
       books: this.props.books,
       loans: this.props.loans,
+      results: [],
+      searchState: '',
+      searchMessage: '',
     };
+
+    this.onSearch = this.onSearch.bind(this);
+    this.onSearchSuccess = this.onSearchSuccess.bind(this);
+    this.onSearchFailure = this.onSearchFailure.bind(this);
   }
 
   render() {
@@ -43,7 +52,24 @@ export default class NetDPLApp extends React.Component {
         <Loans loans={this.state.loans}/>
         <Holds holds={this.state.holds}/>
         <Books books={this.state.books}/>
+        <hr />
+        <Search onSearch={this.onSearch}
+                searchState={this.state.searchState}
+                searchMessage={this.state.searchMessage}
+                results={this.state.results} />
       </div>
     );
+  }
+
+  onSearchSuccess(results) {
+    this.setState({searchState: 'success', results: results, searchMessage: ''});
+  }
+
+  onSearchFailure(message) {
+    this.setState({searchState: 'fail', results: [], searchMessage: message});
+  }
+
+  onSearch(keywords) {
+    Data.searchResults(keywords, this.onSearchSuccess, this.onSearchFailure);
   }
 }
