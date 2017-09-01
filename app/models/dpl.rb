@@ -15,18 +15,30 @@ class DPL
     authenticate
     results = []
 
-    @agent.get("https://catalog.denverlibrary.org/search/components/ajaxResults.aspx?page=1&type=Keyword&term=#{params[:keyword]}&by=KW&sort=RELEVANCE&limit=TOM=*&query=&page=0&searchid=5") do |search_page|
+    @agent.get("https://catalog.denverlibrary.org/search/default.aspx?ctx=1.1033.0.0.6&type=Keyword") do |search_page|
       form = search_page.form_with(:action => 'https://catalog.denverlibrary.org/search/default.aspx')
-https://catalog.denverlibrary.org/search/components/ajaxResults.aspx?page=1&type=Keyword&term=gwenpool&by=KW&sort=RELEVANCE
-
-      binding.remote_pry
-
-
       form['ctrlSearchBars:searchbarKeyword:textboxTerm'] = keywords
-
-      results_page = form.submit(form.buttons.first)
-
+      form.submit(form.buttons.first)
     end
+
+    results_page = @agent.get("https://catalog.denverlibrary.org/search/components/ajaxResults.aspx?page=1&type=Keyword&term=#{keywords}&by=KW&sort=RELEVANCE")
+
+    [2,4,6,8,10].each do |i|
+      row = results_page.search("//*[@id=\"items_table\"]/tr[#{i}]")
+      secondary_values = row.search('.nsm-brief-secondary-zone .nsm-short-item').map(&:text)
+
+      result = {
+        author: row.search('.nsm-brief-primary-author-group .nsm-short-item').text,
+        available: secondary_values[1],
+        current_holds: secondary_values[2],
+        google_preview: row.search('.gbs-preview-link')[0].attributes['href'].value,
+        name: row.search('.nsm-brief-action-link .nsm-short-item').text,
+        thumbnail_uri: row.search('img.thumbnail')[0].attributes['src'].value
+      }
+      results << result
+    end
+
+    results
   end
 
   def holds

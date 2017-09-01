@@ -3,18 +3,8 @@ class SearchController < ApplicationController
   before_action :ensure_logged_in
 
   def index
-    results = []
-    resultCount = 1 + rand(6)
-    (0..resultCount).each do |i|
-      result = {}
-      result['title'] = (0...15).map{('a'..'z').to_a[rand(26)] }.join
-      results << result
-    end
-
     dpl = DPL.new(@current_user)
-    dpl.search(params[:keywords])
-
-    render json: results
+    render json: dpl.search(params[:keywords])
   end
 
   private

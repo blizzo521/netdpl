@@ -7,6 +7,16 @@ export default class Search extends React.Component {
     searchState: PropTypes.string.isRequired,
     searchMessage: PropTypes.string.isRequired,
     results: PropTypes.arrayOf(PropTypes.object).isRequired,
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        available: PropTypes.string.isRequired,
+        current_holds: PropTypes.string.isRequired,
+        google_preview: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        thumbnail_uri: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   };
 
   constructor(props) {
@@ -38,11 +48,32 @@ export default class Search extends React.Component {
         </label>
         <input type="submit" value="Search" />
         {this.status()}
-        {this.props.results.map((result,i) => {
-          return (
-            <div key={i}>{result.title}</div>
-          );
-        })}
+        <table>
+          <thead>
+            <tr>
+              <td>Image</td>
+              <td>Title</td>
+              <td>Author</td>
+              <td>Available</td>
+              <td>Curr. Holds</td>
+              <td>Google Preview</td>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.results.map((result,i) => {
+              return (
+                <tr key={i}>
+                  <td><img src={result.thumbnail_uri} /></td>
+                  <td>{result.name}</td>
+                  <td>{result.author}</td>
+                  <td>{result.available}</td>
+                  <td>{result.current_holds}</td>
+                  <td><a href={result.google_preview}>Preview</a></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </form>
     );
   }
